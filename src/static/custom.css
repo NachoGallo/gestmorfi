@@ -3,6 +3,11 @@
     padding: 0;
     clear: both;
 }
+
+ul{
+    list-style: none;
+}
+
 body{
     background-color: #ede9e8 !important;
 }
@@ -10,9 +15,27 @@ body{
 .card {
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    margin-top: 3rem;
+    padding: 1rem 0;
+    margin: 3rem 0;
     background: white;
     animation: 0.5s ease-in fadeIn 1;
     align-items: center;
+    min-height: 200px;
+}
+
+.error-page{
+    text-align: center;
+    padding-top: 6rem;
+}
+
+.error-icon{
+    color: #e63f3f;
+    font-size: 14rem;
+}
+
+.error-message{
+    margin-top: 2rem;
+    color: #1f1e1e;
+    font-size: 2.5rem;
+    font-weight: bolder;
 }

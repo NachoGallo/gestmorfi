@@ -2,10 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./static/fonts.css";
+import "./static/custom.css";
+
+import { Provider } from "./context/Context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,0 +1,18 @@
+
+.title{
+    font-size: 1.6rem;
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #505050;
+}
+
+.loading{
+    margin-top: 2rem;
+}
+
+.meal-list li:hover{
+    color: #505050;
+    padding-left: 4px;
+    cursor: pointer;
+    transition: .2s ease-in;
+}
