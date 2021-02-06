@@ -6,13 +6,19 @@
     color: #505050;
 }
 
-.loading{
-    margin-top: 2rem;
+.meals{
+    padding-top: 1rem;
+    width: 90%;
 }
 
-.meal-list li:hover{
-    color: #505050;
-    padding-left: 4px;
-    cursor: pointer;
-    transition: .2s ease-in;
+.meals-list{
+    width: 100%;
+}
+
+.loading{
+    display: flex;
+    justify-content: center;
+}
+.check{
+   margin: 0 auto !important;
 }

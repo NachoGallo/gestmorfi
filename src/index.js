@@ -4,14 +4,16 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./static/fonts.css";
 import "./static/custom.css";
-
+import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "./context/Context";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider>
-      <App />
-    </Provider>
+    <ChakraProvider>
+      <Provider>
+        <App />
+      </Provider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
