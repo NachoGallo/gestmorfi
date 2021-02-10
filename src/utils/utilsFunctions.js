@@ -45,12 +45,8 @@ export const ShowToast = (status, title, description) => {
   });
 };
 
-export const cleanData = (checkboxes) => {
+export const cleanCheckbox = (checkboxes) => {
   checkboxes.current.map((checkbox) => {
     checkbox.checked = false;
-  });
-
-  checkboxes.current.map((checkbox) => {
-    console.log(checkbox.checked);
   });
 };

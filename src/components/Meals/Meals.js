@@ -4,7 +4,7 @@ import "./Meals.css";
 import {
   validateCheckbox,
   ShowToast,
-  cleanData,
+  cleanCheckbox,
 } from "../../utils/utilsFunctions";
 import { Context } from "../../context/Context";
 import {
@@ -12,7 +12,6 @@ import {
   Tbody,
   Tr,
   Td,
-  Checkbox,
   Tooltip,
   Spinner,
   Button,
@@ -30,9 +29,10 @@ const Meals = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [invalidInput, setInvalidInput] = useState(false);
-  const { setLayout, setErrorMessage } = useContext(Context);
+  const { setLayout, setErrorMessage, setLoadOrders, loadOrders } = useContext(
+    Context
+  );
   const [orderData, setOrderData] = useState({ name: "", additional: "" });
-  const [uncheck, setUncheck] = useState(false);
 
   const checkboxRef = useRef([]);
   const inputNameRef = useRef(null);
@@ -82,6 +82,7 @@ const Meals = () => {
       );
       ShowToast(res.status, "Orden generada correctamente");
       setButtonLoading(false);
+      setLoadOrders(!loadOrders);
     } catch (error) {
       ShowToast("error", "Ocurrió un error.", "Intente nuevamente, por favor.");
       setButtonLoading(false);
@@ -90,8 +91,7 @@ const Meals = () => {
     //Unset values
     setTotal(0);
     setOrderData({ name: "", additional: "" });
-    inputNameRef.current.value = "";
-    inputAddRef.current.value = "";
+    cleanCheckbox(checkboxRef);
 
     return;
   };
@@ -152,16 +152,15 @@ const Meals = () => {
                       </Td>
                       <Td isNumeric>$ {meal.price}</Td>
                       <Td>
-                        <Checkbox
+                        <input
+                          type="checkbox"
                           ref={(elem) => (checkboxRef.current[i] = elem)}
-                          size="lg"
                           value={meal._id}
                           className="check"
-                          colorScheme="green"
                           onChange={() =>
                             handleCheckboxChange(checkboxRef.current[i])
                           }
-                        ></Checkbox>
+                        />
                       </Td>
                     </Tr>
                   ))}
@@ -178,12 +177,14 @@ const Meals = () => {
                 name="additional"
                 onChange={(e) => handleInputChange(e.target)}
                 variant="filled"
+                value={orderData.additional}
                 placeholder="Opcional adicionales"
                 w="100%"
               />
               <Input
                 ref={(el) => (inputNameRef.current = el)}
                 name="name"
+                value={orderData.name}
                 onChange={(e) => handleInputChange(e.target)}
                 isInvalid={invalidInput}
                 variant="filled"
