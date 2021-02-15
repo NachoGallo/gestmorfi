@@ -180,6 +180,7 @@ const Meals = () => {
                 value={orderData.additional}
                 placeholder="Opcional adicionales"
                 w="100%"
+                maxLength={20}
               />
               <Input
                 ref={(el) => (inputNameRef.current = el)}
@@ -190,6 +191,7 @@ const Meals = () => {
                 variant="filled"
                 placeholder="Tu nombre"
                 w="100%"
+                maxLength={20}
               />
             </Stack>
             <Button

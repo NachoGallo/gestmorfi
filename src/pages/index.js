@@ -5,7 +5,7 @@ import Orders from "../components/Orders/Orders";
 const MainPage = () => {
   return (
     <>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-6 col-12">
             <div className="card">

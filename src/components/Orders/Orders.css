@@ -6,6 +6,36 @@
 }
 
 .orders{
-    padding-top: 1rem;
+    padding: 1rem 0;
     width: 90%;
+    overflow-x: auto;
+}
+
+.empty-orders{
+    color: #505050;
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    font-weight: .8rem;
+    text-align: center;
+}
+
+.css-x3sl35 {
+    font-size: 0.9rem !important;
+    padding: 0.2rem !important;
+    margin: 0.2rem !important;
+    padding-top: .6rem !important;
+    padding-bottom: .6rem !important;
+}
+
+.delete-button{
+    height: 1.5rem !important;
+    min-width: 1.5rem !important;
+    font-size: .8rem !important;
+}
+
+@media (max-width: 600px){
+    .css-x3sl35 {
+        font-size: 0.8rem !important;
+        padding: 0.5rem !important;
+        margin: 0.5rem !important;
+    }
 }

@@ -31,3 +31,9 @@
         format("svg"); /* Legacy iOS */
   }
   
+  @font-face {
+    font-family: "Custom-Title";
+    font-style: normal;
+    font-weight: 400;
+    src: url("./fonts/Berkah-Ramadhan.ttf");
+  }

@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./Orders.css";
 import axios from "axios";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner, Table, Tbody, Tr, Td, IconButton } from "@chakra-ui/react";
+import { CloseIcon } from "@chakra-ui/icons";
 import { Context } from "../../context/Context";
+import { ShowToast } from "../../utils/utilsFunctions";
 
 const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,6 +27,18 @@ const Orders = () => {
     })();
   }, [loadOrders]);
 
+  const deleteOrder = async (orderId) => {
+    let res = await axios.delete(
+      `https://api-rest-gestmorfi.herokuapp.com/api/orders/${orderId}`
+    );
+    if (res.status === 204) {
+      let newOrdersObject = orders.filter((order) => order._id !== orderId);
+      setOrders(newOrdersObject);
+    } else {
+      ShowToast("error", "Error al cancelar el pedido.");
+    }
+  };
+
   return (
     <>
       <span className="title">Ordenes activas</span>
@@ -40,9 +54,42 @@ const Orders = () => {
               label="loading"
             />
           </div>
+        ) : orders && !orders.length ? (
+          <div className="empty-orders">No hay ordenes activas.</div>
         ) : (
           <>
-            <div>Hola</div>
+            <Table
+              className="order-list"
+              variant="striped"
+              colorScheme="blue"
+              size="sm"
+            >
+              <Tbody className="order-body">
+                {orders &&
+                  orders.map((order, i, key) => (
+                    <Tr key={order._id}>
+                      <Td>{order.mealName}</Td>
+                      <Td> {order.userId}</Td>
+                      {order.additional ? (
+                        <Td> {order.additional}</Td>
+                      ) : (
+                        <Td color="red">Sin adicional</Td>
+                      )}
+                      <Td>$ {order.price}</Td>
+                      <Td>
+                        <IconButton
+                          className="delete-button"
+                          size="sm"
+                          colorScheme="red"
+                          aria-label="Cancelar orden"
+                          icon={<CloseIcon />}
+                          onClick={() => deleteOrder(order._id)}
+                        />
+                      </Td>
+                    </Tr>
+                  ))}
+              </Tbody>
+            </Table>
           </>
         )}
       </div>
