@@ -25,16 +25,30 @@
 
     font-size: 1.3rem;
 }
-.close-session-button{
-    margin-top: 23rem;
-    float: right;
+.logout-button{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 1.5rem 1.5rem 0;
     font-size: .9rem;
     font-family: Custom, Arial, Helvetica, sans-serif;
-    color: rgb(34, 34, 253);
-    font-weight: 600;
+    color: rgb(22, 123, 255);
 }
 
-.close-session-button:hover{
+.logout-button-disabled{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 1.5rem 1.5rem 0;
+    font-size: .9rem;
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    color: #505050
+}
+.logout-button-disabled:hover{
+    cursor: pointer;
+}
+
+.logout-button:hover{
     cursor: pointer;
     color: #505050;
 }

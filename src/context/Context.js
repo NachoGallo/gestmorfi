@@ -5,6 +5,7 @@ export const Context = createContext();
 export const Provider = ({ children }) => {
   const [layout, setLayout] = useState("LOGIN_PAGE");
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [userSession, setUserSession] = useState(localStorage.getItem("user"));
   const [errorMessage, setErrorMessage] = useState(
     "Hubo un error, intente nuevamente."
   );
@@ -12,9 +13,11 @@ export const Provider = ({ children }) => {
 
   //Functions
 
-  const closeSession = () => {
+  const logoutSession = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    setToken(null);
+    setUserSession(null);
     setLayout("LOGIN_PAGE");
   };
 
@@ -27,7 +30,9 @@ export const Provider = ({ children }) => {
     setLoadOrders,
     token,
     setToken,
-    closeSession,
+    logoutSession,
+    userSession,
+    setUserSession,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

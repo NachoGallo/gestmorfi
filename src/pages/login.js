@@ -14,7 +14,7 @@ import { ViewIcon } from "@chakra-ui/icons";
 const LoginPage = () => {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { setLayout, setToken } = useContext(Context);
+  const { setLayout, setToken, setUserSession } = useContext(Context);
   const inputRef = useRef({});
   const errorRef = useRef(null);
 
@@ -53,7 +53,8 @@ const LoginPage = () => {
           "https://api-rest-gestmorfi.herokuapp.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", res.data);
+        setUserSession(res.data);
       } catch (error) {
         console.log(error.response);
       }

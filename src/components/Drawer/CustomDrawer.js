@@ -18,12 +18,13 @@ import { Context } from "../../context/Context";
 const CustomDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
-  const { closeSession } = useContext(Context);
+  const { logoutSession, token, userSession } = useContext(Context);
 
-  const closeLocalSession = () => {
+  const logout = () => {
     onClose(true);
-    closeSession();
+    logoutSession();
   };
+
   return (
     <>
       <HamburgerIcon onClick={onOpen} className="drawer-button" />
@@ -38,11 +39,13 @@ const CustomDrawer = () => {
             <DrawerBody>
               <Stack align="center" pt="4">
                 <Avatar size="xl" bg="teal.500" />
-                <p className="user-name">Ignacio</p>
+                <p className="user-name">
+                  {userSession?.name ? userSession?.name : "Sesión no iniciada"}
+                </p>
               </Stack>
               <p
-                className="close-session-button"
-                onClick={() => closeLocalSession()}
+                className={token ? "logout-button" : "logout-button-disabled"}
+                onClick={() => token && logout()}
               >
                 Cerrar sesión
               </p>
