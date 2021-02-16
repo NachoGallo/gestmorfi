@@ -12,7 +12,7 @@ import { ViewIcon } from "@chakra-ui/icons";
 import { Context } from "../context/Context";
 import { inputValidator, ShowToast } from "../utils/utilsFunctions";
 
-const RegisterPage = () => {
+const RegisterPage = ({ history }) => {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { setLayout } = useContext(Context);
@@ -47,7 +47,7 @@ const RegisterPage = () => {
         }
       );
       ShowToast("success", res.data);
-      setLayout("LOGIN_PAGE");
+      history.push("/login");
     } catch (error) {
       ShowToast("error", error.response.data);
     }
@@ -111,7 +111,7 @@ const RegisterPage = () => {
                   colorScheme="blue"
                   variant="ghost"
                   w="35%"
-                  onClick={() => setLayout("LOGIN_PAGE")}
+                  onClick={() => history.push("/login")}
                 >
                   Volver
                 </Button>

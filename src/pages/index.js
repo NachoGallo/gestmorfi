@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Meals from "../components/Meals/Meals";
 import Orders from "../components/Orders/Orders";
+import { Context } from "../context/Context";
 
-const MainPage = () => {
+const MainPage = ({ history }) => {
+  const { token } = useContext(Context);
+  useEffect(() => {
+    if (!token) history.push("/login");
+  }, []);
+
   return (
     <>
       <div className="container-fluid">

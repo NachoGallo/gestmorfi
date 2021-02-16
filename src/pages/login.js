@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   Input,
   Stack,
@@ -11,12 +11,16 @@ import { Context } from "../context/Context";
 import axios from "axios";
 import { ViewIcon } from "@chakra-ui/icons";
 
-const LoginPage = () => {
+const LoginPage = ({ history }) => {
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { setLayout, setToken, setUserSession } = useContext(Context);
+  const { setLayout, setToken, setUserSession, token } = useContext(Context);
   const inputRef = useRef({});
   const errorRef = useRef(null);
+
+  useEffect(() => {
+    if (token) history.push("/orders");
+  }, []);
 
   const login = async () => {
     setIsLoading(true);
@@ -58,8 +62,8 @@ const LoginPage = () => {
       } catch (error) {
         console.log(error.response);
       }
-
-      setLayout("MAIN_PAGE");
+      setIsLoading(false);
+      history.push("/orders");
     } catch (error) {
       errorRef.current.innerHTML = error.response.data;
     }
@@ -109,7 +113,7 @@ const LoginPage = () => {
                   colorScheme="blue"
                   variant="ghost"
                   w="35%"
-                  onClick={() => setLayout("REGISTER_PAGE")}
+                  onClick={() => history.push("/register")}
                 >
                   Registrarse
                 </Button>

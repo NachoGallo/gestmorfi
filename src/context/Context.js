@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { Redirect } from "react-router-dom";
 
 export const Context = createContext();
 
@@ -20,7 +21,6 @@ export const Provider = ({ children }) => {
     localStorage.removeItem("user");
     setToken(null);
     setUserSession(null);
-    setLayout("LOGIN_PAGE");
   };
 
   const value = {

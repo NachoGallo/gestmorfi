@@ -1,37 +1,12 @@
 import React, { useContext } from "react";
-import MainPage from "./pages/index";
-import ErrorPage from "./pages/error";
-import LoginPage from "./pages/login";
-import RegisterPage from "./pages/register";
 import Navbar from "./components/Navbar/Navbar";
-import { Context } from "./context/Context";
+import AppRouter from "./routers/AppRouter";
 
 const App = () => {
-  const { layout, setLayout } = useContext(Context);
-
-  const displayLayout = () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLayout("MAIN_PAGE");
-    }
-    switch (layout) {
-      case "MAIN_PAGE":
-        return <MainPage />;
-      case "ERROR_PAGE":
-        return <ErrorPage />;
-      case "LOGIN_PAGE":
-        return <LoginPage />;
-      case "REGISTER_PAGE":
-        return <RegisterPage />;
-
-      default:
-        return <LoginPage />;
-    }
-  };
   return (
     <>
       <Navbar />
-      {displayLayout()}
+      <AppRouter />
     </>
   );
 };

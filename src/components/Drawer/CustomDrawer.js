@@ -1,20 +1,19 @@
 import React, { useState, useContext } from "react";
 import "./CustomDrawer.css";
+import { Link } from "react-router-dom";
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   Stack,
-  IconButton,
   Avatar,
 } from "@chakra-ui/react";
 import { HamburgerIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Context } from "../../context/Context";
+import App from "../../App";
 const CustomDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
