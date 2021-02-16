@@ -13,10 +13,7 @@ const App = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setLayout("MAIN_PAGE");
-    } else {
-      setLayout("LOGIN_PAGE");
     }
-
     switch (layout) {
       case "MAIN_PAGE":
         return <MainPage />;

@@ -17,7 +17,7 @@ const Orders = () => {
         setIsLoading(true);
         const res = await axios.get(
           "https://api-rest-gestmorfi.herokuapp.com/api/orders",
-          { headers: { Authorization: token } }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setOrders(res.data);
         setIsLoading(false);
@@ -31,7 +31,7 @@ const Orders = () => {
   const deleteOrder = async (orderId) => {
     let res = await axios.delete(
       `https://api-rest-gestmorfi.herokuapp.com/api/orders/${orderId}`,
-      { headers: { Authorization: token } }
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     if (res.status === 204) {
       let newOrdersObject = orders.filter((order) => order._id !== orderId);

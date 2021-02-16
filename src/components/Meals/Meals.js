@@ -43,7 +43,7 @@ const Meals = () => {
       try {
         const res = await axios.get(
           "https://api-rest-gestmorfi.herokuapp.com/api/meals",
-          { headers: { Authorization: token } }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setLayout("MAIN_PAGE");
         setMeals(res.data);
@@ -78,7 +78,7 @@ const Meals = () => {
       let res = await axios.post(
         "https://api-rest-gestmorfi.herokuapp.com/api/orders",
         orderPayload,
-        { headers: { Authorization: token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       ShowToast(res.status, "Orden generada correctamente");
       setButtonLoading(false);
