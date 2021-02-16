@@ -50,3 +50,56 @@ export const cleanCheckbox = (checkboxes) => {
     checkbox.checked = false;
   });
 };
+
+export const inputValidator = (name, value) => {
+  if (value === "" || value === null) {
+    return "Por favor completa el campo";
+  }
+
+  switch (name) {
+    case "nombre":
+      if (!value.match(/^[A-Z]+$/i)) {
+        return "Solo  se permiten letras";
+      }
+      break;
+    case "name":
+      if (!value.match(/^[A-Z]+$/i)) {
+        return "Solo  se permiten letras";
+      }
+      break;
+    case "apellido":
+      if (!value.match(/^[A-Z]+$/i)) {
+        return "Solo  se permiten letras";
+      }
+      break;
+    case "celular":
+      if (!value.match(/^[0-9]*$/) || value.length < 6) {
+        return "Sólo números y celular válido";
+      }
+      break;
+    case "email":
+      let regExp = new RegExp(
+        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$"
+      );
+      if (!value.match(regExp)) {
+        return "Debes escribir un email válido";
+      }
+      break;
+    case "dni":
+      if (!value.match(/^[0-9]*$/) || value.length < 6) {
+        return "Solo numeros y DNI válido";
+      }
+      break;
+
+    case "password":
+      if (value.length < 8) {
+        return "La contraseña debe tener al menos 8 caracteres.";
+      }
+      break;
+    default:
+      if (value) {
+        return null;
+      }
+      break;
+  }
+};

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import MainPage from "./pages/index";
 import ErrorPage from "./pages/error";
+import LoginPage from "./pages/login";
+import RegisterPage from "./pages/register";
 import Navbar from "./components/Navbar/Navbar";
 import { Context } from "./context/Context";
 
@@ -13,9 +15,13 @@ const App = () => {
         return <MainPage />;
       case "ERROR_PAGE":
         return <ErrorPage />;
+      case "LOGIN_PAGE":
+        return <LoginPage />;
+      case "REGISTER_PAGE":
+        return <RegisterPage />;
 
       default:
-        return <MainPage />;
+        return <LoginPage />;
     }
   };
   return (

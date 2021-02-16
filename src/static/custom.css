@@ -39,3 +39,51 @@ body{
     font-size: 2.5rem;
     font-weight: bolder;
 }
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.container{
+    width: 100% !important;
+}
+
+.title-login{
+    font-size: 1.6rem;
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: #505050;
+    padding: 1rem 0;
+    padding-bottom: 2rem !important;
+}
+.error-message{
+    font-size: .8rem;
+    color: rgb(230, 51, 51);
+}
+.has-error{
+    border: 2px solid rgba(255, 0, 0, 0.6) !important;
+    background-color: rgba(255, 0, 0, 0.05) !important;
+}
+
+@media (min-width: 990px){
+    .col-md-6{
+        max-width: 60% !important;
+        width: 60%;
+    }
+}
+@media (min-width: 768px){
+    .col-md-6{
+        max-width: 80% !important;
+    }
+}
+@media (max-width: 675px){
+    .container{
+        width: 95% !important;
+    }
+}
+@media (max-width: 365px){
+    .title-login{
+        font-size: 1.3rem;
+    }
+}

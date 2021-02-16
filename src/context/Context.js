@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export const Context = createContext();
 
 export const Provider = ({ children }) => {
-  const [layout, setLayout] = useState("MAIN_PAGE");
+  const [layout, setLayout] = useState("LOGIN_PAGE");
   const [errorMessage, setErrorMessage] = useState(
     "Hubo un error, intente nuevamente."
   );
