@@ -13,7 +13,7 @@ import {
 import { HamburgerIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Context } from "../../context/Context";
 
-const CustomDrawer = ({ history }) => {
+const CustomDrawer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const { logoutSession, token, userSession } = useContext(Context);
