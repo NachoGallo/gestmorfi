@@ -44,7 +44,19 @@ const LoginPage = () => {
         }
       );
       errorRef.current.innerHTML = "";
-      localStorage.setItem("token", res.data.token);
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+
+      try {
+        const res = await axios.get(
+          "https://api-rest-gestmorfi.herokuapp.com/api/auth/me",
+          { headers: { Authorization: token } }
+        );
+        localStorage.setItem("user", JSON.stringify(res.data));
+      } catch (error) {
+        console.log(error.response);
+      }
+
       setLayout("MAIN_PAGE");
     } catch (error) {
       errorRef.current.innerHTML = error.response.data;

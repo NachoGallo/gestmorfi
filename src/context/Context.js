@@ -4,6 +4,7 @@ export const Context = createContext();
 
 export const Provider = ({ children }) => {
   const [layout, setLayout] = useState("LOGIN_PAGE");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [errorMessage, setErrorMessage] = useState(
     "Hubo un error, intente nuevamente."
   );
@@ -15,6 +16,8 @@ export const Provider = ({ children }) => {
     setErrorMessage,
     loadOrders,
     setLoadOrders,
+    token,
+    setToken,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

@@ -7,9 +7,16 @@ import Navbar from "./components/Navbar/Navbar";
 import { Context } from "./context/Context";
 
 const App = () => {
-  const { layout } = useContext(Context);
+  const { layout, setLayout } = useContext(Context);
 
   const displayLayout = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLayout("MAIN_PAGE");
+    } else {
+      setLayout("LOGIN_PAGE");
+    }
+
     switch (layout) {
       case "MAIN_PAGE":
         return <MainPage />;

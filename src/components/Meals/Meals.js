@@ -29,9 +29,7 @@ const Meals = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [invalidInput, setInvalidInput] = useState(false);
-  const { setLayout, setErrorMessage, setLoadOrders, loadOrders } = useContext(
-    Context
-  );
+  const { setLayout, token, setLoadOrders, loadOrders } = useContext(Context);
   const [orderData, setOrderData] = useState({ name: "", additional: "" });
 
   const checkboxRef = useRef([]);
@@ -44,7 +42,8 @@ const Meals = () => {
 
       try {
         const res = await axios.get(
-          "https://api-rest-gestmorfi.herokuapp.com/api/meals"
+          "https://api-rest-gestmorfi.herokuapp.com/api/meals",
+          { headers: { Authorization: token } }
         );
         setLayout("MAIN_PAGE");
         setMeals(res.data);
@@ -78,7 +77,8 @@ const Meals = () => {
     try {
       let res = await axios.post(
         "https://api-rest-gestmorfi.herokuapp.com/api/orders",
-        orderPayload
+        orderPayload,
+        { headers: { Authorization: token } }
       );
       ShowToast(res.status, "Orden generada correctamente");
       setButtonLoading(false);

@@ -9,14 +9,15 @@ import { ShowToast } from "../../utils/utilsFunctions";
 const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [orders, setOrders] = useState(null);
-  const { loadOrders, setLoadOrders, setLayout } = useContext(Context);
+  const { loadOrders, setLayout, token } = useContext(Context);
 
   useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
         const res = await axios.get(
-          "https://api-rest-gestmorfi.herokuapp.com/api/orders"
+          "https://api-rest-gestmorfi.herokuapp.com/api/orders",
+          { headers: { Authorization: token } }
         );
         setOrders(res.data);
         setIsLoading(false);
@@ -29,7 +30,8 @@ const Orders = () => {
 
   const deleteOrder = async (orderId) => {
     let res = await axios.delete(
-      `https://api-rest-gestmorfi.herokuapp.com/api/orders/${orderId}`
+      `https://api-rest-gestmorfi.herokuapp.com/api/orders/${orderId}`,
+      { headers: { Authorization: token } }
     );
     if (res.status === 204) {
       let newOrdersObject = orders.filter((order) => order._id !== orderId);
