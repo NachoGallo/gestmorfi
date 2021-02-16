@@ -9,6 +9,15 @@ export const Provider = ({ children }) => {
     "Hubo un error, intente nuevamente."
   );
   const [loadOrders, setLoadOrders] = useState(false);
+
+  //Functions
+
+  const closeSession = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setLayout("LOGIN_PAGE");
+  };
+
   const value = {
     layout,
     setLayout,
@@ -18,6 +27,7 @@ export const Provider = ({ children }) => {
     setLoadOrders,
     token,
     setToken,
+    closeSession,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

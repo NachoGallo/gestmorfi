@@ -1,0 +1,40 @@
+.drawer-button{
+    margin: 2rem;
+    font-size: 2rem !important;
+}
+
+.drawer-button:hover{
+    cursor: pointer;
+    color: #c2c2c2;
+}
+
+.close-button{
+
+    transition: .3s ease-in;   
+}
+
+.close-button:hover{
+    margin-left: .5rem;
+    color: #505050;
+    cursor: pointer;
+}
+.user-name{
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    color: #313131;
+    font-weight: 600;
+
+    font-size: 1.3rem;
+}
+.close-session-button{
+    margin-top: 23rem;
+    float: right;
+    font-size: .9rem;
+    font-family: Custom, Arial, Helvetica, sans-serif;
+    color: rgb(34, 34, 253);
+    font-weight: 600;
+}
+
+.close-session-button:hover{
+    cursor: pointer;
+    color: #505050;
+}

@@ -1,5 +1,5 @@
 
-.navbar {
+.custom-navbar {
     background: linear-gradient(90deg, rgb(37, 106, 255) 0%, rgb(45, 154, 255) 100%);
     color: rgb(255, 255, 255);
     font-family: Custom, Arial, Helvetica, sans-serif;
@@ -7,28 +7,32 @@
     margin: 0 !important;
     padding: 0 !important;
 }
-
-.col-4 {
-    padding: 0 !important;
-    margin: 0 !important;
-}
 .logo{
     text-align: center;
     justify-content: center;
     font-family: Custom-Title, Arial, Helvetica, sans-serif ;
     font-size: 3.2rem;
     margin: 0 !important;
-    padding: 0 !important;
+    padding-left: 2rem !important;
 }
 
 .slogan{
     font-family: Custom, Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
+    padding-left: 0 !important;
+    margin-left:  0 !important;
 }
 
-
-@media (max-width: 650px){
-    .logo{
-        font-size: 3rem;
+@media (max-width: 768px){
+    .custom-navbar{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .slogan{
+        display: none;
+    }
+    .spacer{
+        display: none;
     }
 }

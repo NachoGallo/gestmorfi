@@ -47,6 +47,7 @@ const RegisterPage = () => {
         }
       );
       ShowToast("success", res.data);
+      setLayout("LOGIN_PAGE");
     } catch (error) {
       ShowToast("error", error.response.data);
     }
