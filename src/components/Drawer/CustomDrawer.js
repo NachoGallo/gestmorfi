@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import "./CustomDrawer.css";
-import { Link } from "react-router-dom";
 import {
   Drawer,
   DrawerBody,
@@ -13,8 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Context } from "../../context/Context";
-import App from "../../App";
-const CustomDrawer = () => {
+
+const CustomDrawer = ({ history }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [placement, setPlacement] = useState("right");
   const { logoutSession, token, userSession } = useContext(Context);
@@ -22,6 +21,7 @@ const CustomDrawer = () => {
   const logout = () => {
     onClose(true);
     logoutSession();
+    window.location.href = "https://gestmorfi.herokuapp.com/login";
   };
 
   return (

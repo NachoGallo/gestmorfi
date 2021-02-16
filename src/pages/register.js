@@ -21,10 +21,13 @@ const RegisterPage = ({ history }) => {
 
   const registerUser = async () => {
     setIsLoading(true);
+    let countError = 0;
     let err = null;
+
     for (const input in inputRef.current) {
       err = inputValidator(input, inputRef.current[input].value);
       if (err) {
+        countError++;
         inputRef.current[input].classList.add("has-error");
         errorRef.current[input].innerHTML = err;
       } else {
@@ -32,7 +35,7 @@ const RegisterPage = ({ history }) => {
         errorRef.current[input].innerHTML = "";
       }
     }
-    if (err) {
+    if (countError > 0) {
       setIsLoading(false);
       return;
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,13 +8,12 @@ import {
 import MainPage from "../pages";
 import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
-import { Context } from "../context/Context";
+import Navbar from "../components/Navbar/Navbar";
 
 const AppRouter = () => {
-  const { setToken, token } = useContext(Context);
-
   return (
     <Router>
+      <Navbar />
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/login" component={LoginPage} />
