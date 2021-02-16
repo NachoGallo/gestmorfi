@@ -69,7 +69,7 @@ const Meals = () => {
     }
 
     const orderPayload = {
-      mealId: oneChecked,
+      meals: oneChecked,
       userId: orderData.name,
       additional: orderData.additional,
       price: total,

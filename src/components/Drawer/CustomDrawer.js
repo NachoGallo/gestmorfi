@@ -40,7 +40,7 @@ const CustomDrawer = () => {
               <Stack align="center" pt="4">
                 <Avatar size="xl" bg="teal.500" />
                 <p className="user-name">
-                  {userSession?.name ? userSession?.name : "Sesión no iniciada"}
+                  {userSession ? userSession?.name : "Sesión no iniciada"}
                 </p>
               </Stack>
               <p

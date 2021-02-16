@@ -53,8 +53,8 @@ const LoginPage = () => {
           "https://api-rest-gestmorfi.herokuapp.com/api/auth/me",
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        localStorage.setItem("user", res.data);
-        setUserSession(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+        setUserSession(JSON.parse(JSON.stringify(res.data)));
       } catch (error) {
         console.log(error.response);
       }
