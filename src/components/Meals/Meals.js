@@ -150,7 +150,7 @@ const Meals = () => {
                           <InfoOutlineIcon w={5} h={5} />
                         </Tooltip>
                       </Td>
-                      <Td isNumeric>$ {meal.price}</Td>
+                      <Td>$ {meal.price}</Td>
                       <Td>
                         <input
                           type="checkbox"

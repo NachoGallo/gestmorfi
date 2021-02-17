@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./CustomDrawer.css";
+import { NavLink } from "react-router-dom";
 import {
   Drawer,
   DrawerBody,
@@ -9,6 +10,7 @@ import {
   useDisclosure,
   Stack,
   Avatar,
+  Divider,
 } from "@chakra-ui/react";
 import { HamburgerIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import { Context } from "../../context/Context";
@@ -21,7 +23,8 @@ const CustomDrawer = () => {
   const logout = () => {
     onClose(true);
     logoutSession();
-    window.location.href = "https://gestmorfi.herokuapp.com/login";
+    // window.location.href = "https://gestmorfi.herokuapp.com/login";
+    window.location.href = "http://localhost:3000/login";
   };
 
   return (
@@ -41,6 +44,11 @@ const CustomDrawer = () => {
                 <p className="user-name">
                   {userSession ? userSession?.name : "Sesión no iniciada"}
                 </p>
+              </Stack>
+
+              <Stack>
+                <Divider />
+                <NavLink to="/meals">Editar menú</NavLink>
               </Stack>
               <p
                 className={token ? "logout-button" : "logout-button-disabled"}

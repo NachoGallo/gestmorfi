@@ -1,9 +1,3 @@
-.title{
-    font-size: 1.6rem;
-    font-family: Custom, Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    color: #505050;
-}
 
 .orders{
     padding: 1rem 0;
@@ -18,24 +12,8 @@
     text-align: center;
 }
 
-.css-x3sl35 {
-    font-size: 0.9rem !important;
-    padding: 0.2rem !important;
-    margin: 0.2rem !important;
-    padding-top: .6rem !important;
-    padding-bottom: .6rem !important;
-}
-
 .delete-button{
     height: 1.5rem !important;
     min-width: 1.5rem !important;
     font-size: .8rem !important;
-}
-
-@media (max-width: 600px){
-    .css-x3sl35 {
-        font-size: 0.8rem !important;
-        padding: 0.5rem !important;
-        margin: 0.5rem !important;
-    }
 }
