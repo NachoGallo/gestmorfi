@@ -13,22 +13,21 @@ import {
   Stack,
   useDisclosure,
   Button,
-  AlertDialog,
 } from "@chakra-ui/react";
 import { ShowToast } from "../../utils/utilsFunctions";
 import { EditIcon, DeleteIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Context } from "../../context/Context";
-import EditMealModal from "../../utils/EditMealModal";
-import CustomAlertDialog from "../../utils/AlertDialog";
+import EditMealModal from "./EditMealModal";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+const MySwal = withReactContent(Swal);
 
 const MealsList = ({ history }) => {
   const [meals, setMeals] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [mealData, setMealData] = useState(null);
-  const [mealToDelete, setMealToDelete] = useState(null);
-  const [toggleAlert, setToggleAlert] = useState(false);
   const { token } = useContext(Context);
 
   const { isOpen, onOpen, onClose } = useDisclosure(); //Trigger Modal
@@ -90,41 +89,44 @@ const MealsList = ({ history }) => {
   };
 
   const deleteMeal = ({ target }) => {
-    setMealToDelete(target.attributes.value.value);
-    setToggleAlert(!toggleAlert);
+    const mealObject = meals.filter(
+      (meal) => meal._id == target.attributes.value.value
+    )[0];
+
+    MySwal.fire({
+      title: "¡Atención!",
+      html: `¿Estás seguro que querés eliminar el plato <strong>${mealObject.name}</strong> ?`,
+      icon: "warning",
+      confirmButtonColor: "red",
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+      showCancelButton: true,
+    }).then(async (res) => {
+      if (res.value) {
+        const res = await axios.delete(
+          `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealObject._id}`
+        );
+
+        ShowToast(
+          res.status,
+          res.status == 204
+            ? "Plato eliminado correctamente."
+            : "Hubo un error al eliminar el plato."
+        );
+
+        if (res.status == 204) {
+          const index = meals.findIndex((meal) => meal._id == mealObject._id);
+          const newMealsList = [...meals];
+          newMealsList.splice(index, 1);
+          setMeals(newMealsList);
+        }
+      }
+    });
   };
-
-  const onConfirmDelete = async () => {
-    const res = await axios.delete(
-      `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealToDelete}`
-    );
-
-    ShowToast(
-      res.status,
-      res.status == 204
-        ? "Plato eliminado correctamente."
-        : "Hubo un error al eliminar el plato."
-    );
-
-    if (res.status == 204) {
-      const index = meals.findIndex((meal) => meal._id == mealToDelete);
-      const newMealsList = [...meals];
-      newMealsList.splice(index, 1);
-      setMeals(newMealsList);
-    }
-    setToggleAlert(!toggleAlert);
-  };
-
   return (
     <>
       <span className="title">Listado de platos</span>
       <div className="meals">
-        <Stack mt={2} mb={5} direction="row" spacing={10} float="right">
-          <Button colorScheme="blue" shadow="lg">
-            Agregar plato
-          </Button>
-          {/* <Button colorScheme="green">Guardar cambios</Button> */}
-        </Stack>
         {isLoading ? (
           <div className="loading">
             <Spinner
@@ -138,6 +140,12 @@ const MealsList = ({ history }) => {
           </div>
         ) : (
           <>
+            <Stack mt={2} mb={5} direction="row" spacing={10} float="right">
+              <Button colorScheme="blue" shadow="lg">
+                Agregar plato
+              </Button>
+              {/* <Button colorScheme="green">Guardar cambios</Button> */}
+            </Stack>
             <Table
               className="meals-list"
               variant="striped"
@@ -225,11 +233,6 @@ const MealsList = ({ history }) => {
         setMeals={setMeals}
         mealData={mealData}
         setMealData={setMealData}
-      />
-      <CustomAlertDialog
-        body={"¿Estás seguro que querés eliminar el plato?"}
-        onConfirm={onConfirmDelete}
-        toggleAlert={toggleAlert}
       />
     </>
   );

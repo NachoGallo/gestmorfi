@@ -10,15 +10,12 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { ShowToast } from "../utils/utilsFunctions";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { ShowToast } from "../../utils/utilsFunctions";
+const MySwal = withReactContent(Swal);
 
 const EditMealModal = ({
   onClose,
@@ -28,45 +25,45 @@ const EditMealModal = ({
   mealData,
   setMealData,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [alertIsOpen, setAlertIsOpen] = useState(false);
-  const onCloseAlert = () => setAlertIsOpen(false);
-
   const handleInputChange = ({ target }) => {
     setMealData({ ...mealData, [target.name]: target.value });
   };
 
   const saveChanges = async () => {
-    setIsLoading(true);
-    const res = await axios.put(
-      `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealData._id}`,
-      {
-        name: mealData.name,
-        description: mealData.description,
-        price: mealData.price,
+    MySwal.fire({
+      title: "¡Atención!",
+      html: `¿Estás seguro que querés editar el plato?`,
+      icon: "warning",
+      confirmButtonText: "Confirmar",
+      cancelButtonText: "Cancelar",
+      showCancelButton: true,
+    }).then(async (res) => {
+      if (res.value) {
+        const response = await axios.put(
+          `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealData._id}`,
+          {
+            name: mealData.name,
+            description: mealData.description,
+            price: mealData.price,
+          }
+        );
+
+        if (response.status == 204) {
+          const index = meals.findIndex((meal) => meal._id == mealData._id);
+          const newMealsList = [...meals];
+          newMealsList[index] = mealData;
+          setMeals(newMealsList);
+        }
+
+        ShowToast(
+          response.status,
+          response.status == 204
+            ? "Plato actualizado con éxito."
+            : "Hubo un error al actualizar el plato."
+        );
+        onClose();
       }
-    );
-
-    if (res.status == 204) {
-      const index = meals.findIndex((meal) => meal._id == mealData._id);
-      const newMealsList = [...meals];
-      newMealsList[index] = mealData;
-      setMeals(newMealsList);
-    }
-
-    ShowToast(
-      res.status,
-      res.status == 204
-        ? "Plato actualizado con éxito."
-        : "Hubo un error al actualizar el plato."
-    );
-    setIsLoading(false);
-    onCloseAlert();
-    onClose();
-  };
-
-  const showAlert = () => {
-    setAlertIsOpen(true);
+    });
   };
 
   return (
@@ -115,40 +112,13 @@ const EditMealModal = ({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => showAlert()}>
+            <Button colorScheme="blue" mr={3} onClick={saveChanges}>
               Guardar cambios
             </Button>
             <Button onClick={onClose}>Cancelar</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-
-      <AlertDialog isOpen={alertIsOpen} onClose={onCloseAlert}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              ¡Atención!
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              ¿Estás seguro que queres actualizar el plato?
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button onClick={onCloseAlert}>Cancel</Button>
-              <Button
-                colorScheme="blue"
-                onClick={() => saveChanges()}
-                ml={3}
-                isLoading={isLoading}
-                loadingText="Guardando..."
-              >
-                Confirmar
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
     </>
   );
 };

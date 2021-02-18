@@ -91,6 +91,11 @@ body{
     background-color: rgba(255, 0, 0, 0.05) !important;
 }
 
+
+
+.swal2-container{
+    z-index: 1401 !important;
+}
 @media (min-width: 990px){
     .col-md-6{
         max-width: 60% !important;
