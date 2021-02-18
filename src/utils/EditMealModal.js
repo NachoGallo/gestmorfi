@@ -21,12 +21,12 @@ import axios from "axios";
 import { ShowToast } from "../utils/utilsFunctions";
 
 const EditMealModal = ({
-  onOpen,
   onClose,
   isOpen,
+  meals,
+  setMeals,
   mealData,
   setMealData,
-  fetchMeals,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [alertIsOpen, setAlertIsOpen] = useState(false);
@@ -46,6 +46,14 @@ const EditMealModal = ({
         price: mealData.price,
       }
     );
+
+    if (res.status == 204) {
+      const index = meals.findIndex((meal) => meal._id == mealData._id);
+      const newMealsList = [...meals];
+      newMealsList[index] = mealData;
+      setMeals(newMealsList);
+    }
+
     ShowToast(
       res.status,
       res.status == 204
@@ -54,11 +62,10 @@ const EditMealModal = ({
     );
     setIsLoading(false);
     onCloseAlert();
-    fetchMeals();
+    onClose();
   };
 
   const showAlert = () => {
-    onClose();
     setAlertIsOpen(true);
   };
 

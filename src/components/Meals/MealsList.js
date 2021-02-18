@@ -13,17 +13,22 @@ import {
   Stack,
   useDisclosure,
   Button,
+  AlertDialog,
 } from "@chakra-ui/react";
+import { ShowToast } from "../../utils/utilsFunctions";
 import { EditIcon, DeleteIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import EditMealModal from "../../utils/EditMealModal";
+import CustomAlertDialog from "../../utils/AlertDialog";
 
 const MealsList = ({ history }) => {
   const [meals, setMeals] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [mealData, setMealData] = useState(null);
+  const [mealToDelete, setMealToDelete] = useState(null);
+  const [toggleAlert, setToggleAlert] = useState(false);
   const { token } = useContext(Context);
 
   const { isOpen, onOpen, onClose } = useDisclosure(); //Trigger Modal
@@ -55,6 +60,59 @@ const MealsList = ({ history }) => {
       console.log(error);
       history.push("/error");
     }
+  };
+
+  const changeVisibility = async ({ target }) => {
+    const mealObject = meals.filter(
+      (meal) => meal._id == target.attributes.value.value
+    )[0];
+
+    const currentVisibility = mealObject.visibility;
+
+    const res = await axios.put(
+      `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealObject._id}`,
+      {
+        visibility: !currentVisibility,
+      }
+    );
+    ShowToast(
+      res.status,
+      res.status == 204
+        ? "Visibilidad de plato actualizada."
+        : "Hubo un error al actualizar la visibilidad del plato."
+    );
+    if (res.status == 204) {
+      const index = meals.findIndex((meal) => meal._id == mealObject._id);
+      const newMealsList = [...meals];
+      newMealsList[index].visibility = !currentVisibility;
+      setMeals(newMealsList);
+    }
+  };
+
+  const deleteMeal = ({ target }) => {
+    setMealToDelete(target.attributes.value.value);
+    setToggleAlert(!toggleAlert);
+  };
+
+  const onConfirmDelete = async () => {
+    const res = await axios.delete(
+      `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealToDelete}`
+    );
+
+    ShowToast(
+      res.status,
+      res.status == 204
+        ? "Plato eliminado correctamente."
+        : "Hubo un error al eliminar el plato."
+    );
+
+    if (res.status == 204) {
+      const index = meals.findIndex((meal) => meal._id == mealToDelete);
+      const newMealsList = [...meals];
+      newMealsList.splice(index, 1);
+      setMeals(newMealsList);
+    }
+    setToggleAlert(!toggleAlert);
   };
 
   return (
@@ -114,12 +172,7 @@ const MealsList = ({ history }) => {
                               colorScheme="blue"
                               size="sm"
                               aria-label="Edit meal"
-                              icon={
-                                <EditIcon
-                                  value={meal._id}
-                                  className="custom-charka-icon"
-                                />
-                              }
+                              icon={<EditIcon className="custom-charka-icon" />}
                               mr={4}
                               onClick={(e) => editMeal(e)}
                             />
@@ -138,14 +191,11 @@ const MealsList = ({ history }) => {
                               size="sm"
                               aria-label="Delete meal"
                               icon={
-                                meal.visibility ? (
-                                  <ViewIcon value={meal._id} />
-                                ) : (
-                                  <ViewOffIcon value={meal._id} />
-                                )
+                                meal.visibility ? <ViewIcon /> : <ViewOffIcon />
                               }
                               isActive={!meal.visibility}
                               mr={4}
+                              onClick={changeVisibility}
                             />
                           </Tooltip>
                           <Tooltip label="Eliminar plato" fontSize="md">
@@ -154,7 +204,8 @@ const MealsList = ({ history }) => {
                               colorScheme="red"
                               size="sm"
                               aria-label="Delete meal"
-                              icon={<DeleteIcon value={meal._id} />}
+                              icon={<DeleteIcon />}
+                              onClick={deleteMeal}
                             />
                           </Tooltip>
                         </Flex>
@@ -170,9 +221,15 @@ const MealsList = ({ history }) => {
         onOpen={onOpen}
         onClose={onClose}
         isOpen={isOpen}
+        meals={meals}
+        setMeals={setMeals}
         mealData={mealData}
         setMealData={setMealData}
-        fetchMeals={fetchMeals}
+      />
+      <CustomAlertDialog
+        body={"¿Estás seguro que querés eliminar el plato?"}
+        onConfirm={onConfirmDelete}
+        toggleAlert={toggleAlert}
       />
     </>
   );
