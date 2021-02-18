@@ -18,6 +18,9 @@ export const ShowToast = (status, title, description) => {
     case 201:
       status = "success";
       break;
+    case 204:
+      status = "success";
+      break;
     case 400:
       status = "error";
       break;
