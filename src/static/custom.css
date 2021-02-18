@@ -4,7 +4,7 @@
     clear: both;
 }
 
-.chakra-icon{
+.chakra-button .chakra-icon{
     pointer-events: none;
 }
 

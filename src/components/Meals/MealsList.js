@@ -114,7 +114,12 @@ const MealsList = ({ history }) => {
                               colorScheme="blue"
                               size="sm"
                               aria-label="Edit meal"
-                              icon={<EditIcon value={meal._id} />}
+                              icon={
+                                <EditIcon
+                                  value={meal._id}
+                                  className="custom-charka-icon"
+                                />
+                              }
                               mr={4}
                               onClick={(e) => editMeal(e)}
                             />
