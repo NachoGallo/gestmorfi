@@ -132,6 +132,8 @@ const Meals = () => {
               label="loading"
             />
           </div>
+        ) : meals && !meals.length ? (
+          <div className="empty-orders">No hay platos disponibles.</div>
         ) : (
           <>
             <Table

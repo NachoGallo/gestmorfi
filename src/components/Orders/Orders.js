@@ -70,7 +70,7 @@ const Orders = () => {
                 {orders &&
                   orders.map((order, i, key) => (
                     <Tr key={order._id}>
-                      <Td>{order.meals.name}</Td>
+                      <Td>{order.meals?.name}</Td>
                       <Td> {order.userId}</Td>
                       {order.additional ? (
                         <Td> {order.additional}</Td>
