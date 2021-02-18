@@ -21,12 +21,14 @@ import { Context } from "../../context/Context";
 import EditMealModal from "./EditMealModal";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import CreateMealModal from "./CreateMealModal";
 const MySwal = withReactContent(Swal);
 
 const MealsList = ({ history }) => {
   const [meals, setMeals] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
+  const [showCreateMeal, setShowCreateMeal] = useState(false);
   const [mealData, setMealData] = useState(null);
   const { token } = useContext(Context);
 
@@ -36,7 +38,13 @@ const MealsList = ({ history }) => {
     fetchMeals();
   }, []);
 
+  const createNewMeal = () => {
+    setShowCreateMeal(true);
+    onOpen();
+  };
+
   const editMeal = ({ target }) => {
+    setShowCreateMeal(false);
     const mealObject = meals.filter(
       (meal) => meal._id == target.attributes.value.value
     )[0];
@@ -97,7 +105,7 @@ const MealsList = ({ history }) => {
       title: "¡Atención!",
       html: `¿Estás seguro que querés eliminar el plato <strong>${mealObject.name}</strong> ?`,
       icon: "warning",
-      confirmButtonColor: "red",
+      confirmButtonColor: "#ff6b6b",
       confirmButtonText: "Confirmar",
       cancelButtonText: "Cancelar",
       showCancelButton: true,
@@ -123,6 +131,7 @@ const MealsList = ({ history }) => {
       }
     });
   };
+
   return (
     <>
       <span className="title">Listado de platos</span>
@@ -141,7 +150,7 @@ const MealsList = ({ history }) => {
         ) : (
           <>
             <Stack mt={2} mb={5} direction="row" spacing={10} float="right">
-              <Button colorScheme="blue" shadow="lg">
+              <Button colorScheme="blue" shadow="lg" onClick={createNewMeal}>
                 Agregar plato
               </Button>
               {/* <Button colorScheme="green">Guardar cambios</Button> */}
@@ -225,15 +234,26 @@ const MealsList = ({ history }) => {
           </>
         )}
       </div>
-      <EditMealModal
-        onOpen={onOpen}
-        onClose={onClose}
-        isOpen={isOpen}
-        meals={meals}
-        setMeals={setMeals}
-        mealData={mealData}
-        setMealData={setMealData}
-      />
+
+      {showCreateMeal ? (
+        <CreateMealModal
+          onOpen={onOpen}
+          onClose={onClose}
+          isOpen={isOpen}
+          meals={meals}
+          setMeals={setMeals}
+        />
+      ) : (
+        <EditMealModal
+          onOpen={onOpen}
+          onClose={onClose}
+          isOpen={isOpen}
+          meals={meals}
+          setMeals={setMeals}
+          mealData={mealData}
+          setMealData={setMealData}
+        />
+      )}
     </>
   );
 };
