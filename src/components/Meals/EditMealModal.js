@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Modal,
   Button,
+  Select,
   FormControl,
   Input,
   FormLabel,
@@ -21,6 +22,7 @@ const EditMealModal = ({
   onClose,
   isOpen,
   meals,
+  categories,
   setMeals,
   mealData,
   setMealData,
@@ -108,6 +110,22 @@ const EditMealModal = ({
                 value={mealData?.price}
                 onChange={(e) => handleInputChange(e)}
               />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel fontWeight="700">Categoria</FormLabel>
+              <Select
+                name="category"
+                placeholder="Elegí una categoría"
+                onChange={handleInputChange}
+              >
+                {categories.map((category) => {
+                  if (category.visibility) {
+                    return (
+                      <option value={category._id}>{category.name}</option>
+                    );
+                  }
+                })}
+              </Select>
             </FormControl>
           </ModalBody>
 

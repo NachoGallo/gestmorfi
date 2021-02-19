@@ -20,7 +20,7 @@ import withReactContent from "sweetalert2-react-content";
 import { ShowToast } from "../../utils/utilsFunctions";
 const MySwal = withReactContent(Swal);
 
-const CreateMealModal = ({ onClose, isOpen, meals, setMeals }) => {
+const CreateMealModal = ({ onClose, isOpen, meals, setMeals, categories }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [mealData, setMealData] = useState({
     name: "",
@@ -112,9 +112,13 @@ const CreateMealModal = ({ onClose, isOpen, meals, setMeals }) => {
                 placeholder="Elegí una categoría"
                 onChange={handleInputChange}
               >
-                <option value="option1">Testing</option>
-                <option value="option2">Testing</option>
-                <option value="option3">Testing</option>
+                {categories.map((category) => {
+                  if (category.visibility) {
+                    return (
+                      <option value={category._id}>{category.name}</option>
+                    );
+                  }
+                })}
               </Select>
             </FormControl>
             <FormControl mt={4}>

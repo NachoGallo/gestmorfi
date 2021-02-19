@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { Context } from "../../context/Context";
 import {
   Table,
   Tbody,
@@ -14,10 +15,9 @@ import {
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
-import { ShowToast } from "../../utils/utilsFunctions";
 import { EditIcon, DeleteIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import axios from "axios";
-import { Context } from "../../context/Context";
+import { ShowToast } from "../../utils/utilsFunctions";
 import EditMealModal from "./EditMealModal";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -26,6 +26,7 @@ const MySwal = withReactContent(Swal);
 
 const MealsList = ({ history }) => {
   const [meals, setMeals] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [showCreateMeal, setShowCreateMeal] = useState(false);
@@ -35,7 +36,7 @@ const MealsList = ({ history }) => {
   const { isOpen, onOpen, onClose } = useDisclosure(); //Trigger Modal
 
   useEffect(() => {
-    fetchMeals();
+    fetchData();
   }, []);
 
   const createNewMeal = () => {
@@ -53,7 +54,7 @@ const MealsList = ({ history }) => {
     onOpen();
   };
 
-  const fetchMeals = async () => {
+  const fetchData = async () => {
     setIsLoading(true);
 
     try {
@@ -62,11 +63,23 @@ const MealsList = ({ history }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setMeals(res.data);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
       history.push("/error");
     }
+
+    try {
+      const res = await axios.get(
+        "https://api-rest-gestmorfi.herokuapp.com/api/categories",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCategories(res.data);
+    } catch (error) {
+      console.log(error);
+      history.push("/error");
+    }
+
+    setIsLoading(false);
   };
 
   const changeVisibility = async ({ target }) => {
@@ -241,6 +254,7 @@ const MealsList = ({ history }) => {
           onClose={onClose}
           isOpen={isOpen}
           meals={meals}
+          categories={categories}
           setMeals={setMeals}
         />
       ) : (
@@ -248,7 +262,9 @@ const MealsList = ({ history }) => {
           onOpen={onOpen}
           onClose={onClose}
           isOpen={isOpen}
+          categories={categories}
           meals={meals}
+          categories={categories}
           setMeals={setMeals}
           mealData={mealData}
           setMealData={setMealData}
