@@ -47,6 +47,7 @@ const EditMealModal = ({
             name: mealData.name,
             description: mealData.description,
             price: mealData.price,
+            categoryId: mealData.category,
           }
         );
 
@@ -118,7 +119,7 @@ const EditMealModal = ({
                 placeholder="Elegí una categoría"
                 onChange={handleInputChange}
               >
-                {categories.map((category) => {
+                {categories?.map((category) => {
                   if (category.visibility) {
                     return (
                       <option value={category._id}>{category.name}</option>

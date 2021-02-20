@@ -144,28 +144,32 @@ const Meals = () => {
             >
               <Tbody>
                 {meals &&
-                  meals.map((meal, i, key) => (
-                    <Tr key={meal._id}>
-                      <Td className="meal-title">{meal.name}</Td>
-                      <Td>
-                        <Tooltip label={meal.description} fontSize="md">
-                          <InfoOutlineIcon w={5} h={5} />
-                        </Tooltip>
-                      </Td>
-                      <Td>$ {meal.price}</Td>
-                      <Td>
-                        <input
-                          type="checkbox"
-                          ref={(elem) => (checkboxRef.current[i] = elem)}
-                          value={meal._id}
-                          className="check"
-                          onChange={() =>
-                            handleCheckboxChange(checkboxRef.current[i])
-                          }
-                        />
-                      </Td>
-                    </Tr>
-                  ))}
+                  meals.map((meal, i, key) => {
+                    if (meal.visibility) {
+                      return (
+                        <Tr key={meal._id}>
+                          <Td className="meal-title">{meal.name}</Td>
+                          <Td>
+                            <Tooltip label={meal.description} fontSize="md">
+                              <InfoOutlineIcon w={5} h={5} />
+                            </Tooltip>
+                          </Td>
+                          <Td>$ {meal.price}</Td>
+                          <Td>
+                            <input
+                              type="checkbox"
+                              ref={(elem) => (checkboxRef.current[i] = elem)}
+                              value={meal._id}
+                              className="check"
+                              onChange={() =>
+                                handleCheckboxChange(checkboxRef.current[i])
+                              }
+                            />
+                          </Td>
+                        </Tr>
+                      );
+                    }
+                  })}
               </Tbody>
             </Table>
             <Flex mt={5}>
