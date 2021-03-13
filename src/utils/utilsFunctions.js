@@ -1,13 +1,15 @@
 import { createStandaloneToast } from "@chakra-ui/react";
 
 export const validateCheckbox = (checkboxes) => {
-  let result = false;
+  let checked = [];
 
   checkboxes.current.map((checkbox) => {
-    if (checkbox.checked) result = checkbox.value;
+    if (checkbox.checked) {
+      checked.push(checkbox.value);
+    }
   });
 
-  return result;
+  return checked;
 };
 
 export const ShowToast = (status, title, description) => {

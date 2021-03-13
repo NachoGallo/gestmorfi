@@ -93,7 +93,8 @@ const MealsList = ({ history }) => {
       `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealObject._id}`,
       {
         visibility: !currentVisibility,
-      }
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     ShowToast(
       res.status,
@@ -125,7 +126,8 @@ const MealsList = ({ history }) => {
     }).then(async (res) => {
       if (res.value) {
         const res = await axios.delete(
-          `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealObject._id}`
+          `https://api-rest-gestmorfi.herokuapp.com/api/meals/${mealObject._id}`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         ShowToast(

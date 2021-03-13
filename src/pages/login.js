@@ -65,7 +65,7 @@ const LoginPage = ({ history }) => {
       setIsLoading(false);
       history.push("/orders");
     } catch (error) {
-      errorRef.current.innerHTML = error.response.data;
+      errorRef.current.innerHTML = error.response.data.msg;
     }
 
     setIsLoading(false);

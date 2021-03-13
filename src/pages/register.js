@@ -49,7 +49,7 @@ const RegisterPage = ({ history }) => {
           name: inputRef.current["name"].value,
         }
       );
-      ShowToast("success", res.data);
+      ShowToast("success", "Usuario creado correctamente.");
       history.push("/login");
     } catch (error) {
       ShowToast("error", error.response.data);

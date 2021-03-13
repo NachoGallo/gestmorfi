@@ -5,7 +5,7 @@ import { Context } from "../context/Context";
 const MealsManagment = ({ history }) => {
   const { token, userSession } = useContext(Context);
   useEffect(() => {
-    if (!token || userSession.role != "admin") history.push("/login");
+    if (!token || userSession.role != "ADMIN_ROLE") history.push("/login");
   }, []);
 
   return (

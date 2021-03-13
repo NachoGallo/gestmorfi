@@ -24,7 +24,7 @@ import {
 import { InfoOutlineIcon } from "@chakra-ui/icons";
 
 const Meals = () => {
-  const [meals, setMeals] = useState(null);
+  const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -57,8 +57,9 @@ const Meals = () => {
 
   const generateOrder = async () => {
     setButtonLoading(true);
-    const oneChecked = validateCheckbox(checkboxRef);
-    if (!oneChecked) {
+    const mealsChecked = validateCheckbox(checkboxRef);
+
+    if (!!!mealsChecked.length) {
       ShowToast(
         "error",
         "Error al realizar pedido.",
@@ -69,16 +70,18 @@ const Meals = () => {
     }
 
     const orderPayload = {
-      meals: oneChecked,
+      meals: mealsChecked,
       userId: orderData.name,
       additional: orderData.additional,
       price: total,
     };
     try {
       let res = await axios.post(
-        "https://api-rest-gestmorfi.herokuapp.com/api/orders",
+        "http://localhost:3001/api/orders",
         orderPayload,
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       ShowToast(res.status, "Orden generada correctamente");
       setButtonLoading(false);
