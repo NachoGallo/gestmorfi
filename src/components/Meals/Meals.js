@@ -29,7 +29,13 @@ const Meals = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [invalidInput, setInvalidInput] = useState(false);
-  const { setLayout, token, setLoadOrders, loadOrders } = useContext(Context);
+  const {
+    setLayout,
+    token,
+    setLoadOrders,
+    loadOrders,
+    userSession,
+  } = useContext(Context);
   const [orderData, setOrderData] = useState({ name: "", additional: "" });
 
   const checkboxRef = useRef([]);
@@ -71,7 +77,7 @@ const Meals = () => {
 
     const orderPayload = {
       meals: mealsChecked,
-      userId: orderData.name,
+      userId: userSession._id,
       additional: orderData.additional,
       price: total,
     };
