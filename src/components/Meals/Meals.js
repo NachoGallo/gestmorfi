@@ -83,7 +83,7 @@ const Meals = () => {
     };
     try {
       let res = await axios.post(
-        "http://localhost:3001/api/orders",
+        "https://api-rest-gestmorfi.herokuapp.com/api/orders",
         orderPayload,
         {
           headers: { Authorization: `Bearer ${token}` },
